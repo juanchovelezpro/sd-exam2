@@ -21,8 +21,11 @@ services:
         mem_limit: 500M
         cpus: 1
         environment: 
+            MONGO_DB: mongo
             MONGO_USER: distri
             MONGO_PASS: secret
+        ports:
+            - 8082:8082
         depends_on: 
             - mongo
         networks:
