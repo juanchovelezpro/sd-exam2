@@ -19,7 +19,8 @@ Para utilizar esta aplicación debe seguir los siguientes pasos:
 
 `sh build.sh`
 
-- Por último, se imprime la IP por la cual se puede acceder a la aplicación.
+- Por último, se imprimen los nombres y las IPs de los contenedores.
+Para acceder a la aplicación buscar el contenedor sd-exam2_nginx_1 y buscar su correspondiente IPv4Address.
 
 Ejemplo:
 
@@ -29,13 +30,19 @@ Con esta IP podemos acceder a la aplicación desde un navegador y con el puerto 
 
 En la aplicación se puede hacer un INSERT, UPDATE, DELETE, SELECT.
 
-La base de datos de la aplicación cuenta con los siguientes atributos:
+La base de datos de la aplicación cuenta con los siguientes atributos para poder hacer el INSERT, los siguientes atributos deben ser enviados en formato JSON y con una petición POST.
 
 - Nombre
 - Genero
 - Anho
 - Precio
 - Desarrollador
+
+Para un DELETE hacemos una petición DELETE y apuntamos a /mongo/example/id
+
+Para un UPDATE hacemos una petición PATCH y apuntamos a /mongo/example/id enviando en formato JSON el objeto modificado.
+
+Para el SELECT solo debemos apuntar a /mongo/example. En caso de solo necesitar un objeto se le agrega el id al final.
 
 Para hacer las anteriores peticiones puedes utilizar Postman apuntando /mongo/example.
 
