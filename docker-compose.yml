@@ -1,5 +1,6 @@
 version: "3.8"
-services: 
+services:
+     
     mongo:
         image: mongo
         mem_limit: 500M
@@ -9,8 +10,8 @@ services:
         environment:
             MONGO_INITDB_ROOT_USERNAME: distri
             MONGO_INITDB_ROOT_PASSWORD: secret
-        ports:
-            - 27017:27017
+        expose:
+            - "27017"
         networks:
             service-network:
                 aliases:
@@ -24,30 +25,45 @@ services:
             MONGO_DB: mongo
             MONGO_USER: distri
             MONGO_PASS: secret
-        ports:
-            - 8082:8082
+        expose:
+            - "8082"
         depends_on: 
             - mongo
         networks:
             service-network:
                 aliases:
-                    - api
+                    - back
 
     nginx:
         image: nginx
         mem_limit: 500M
         cpus: 1
         volumes:
-         - ./templates:/etc/nginx/templates
-        ports:
-         - "8080:80"
-        environment:
-            NGINX_HOST: api
-            NGINX_PORT: 80
+            - ./templates/nginxback.conf:/etc/nginx/nginx.conf:ro
+        ports: 
+            - 4000:4000
+        depends_on: 
+            - back
         networks:
             service-network:
                 aliases: 
                     - nginx
+
+    nginxdb:
+        image: nginx
+        mem_limit: 500M
+        cpus: 1
+        volumes:
+            - ./templates/nginxdb.conf:/etc/nginx/nginx.conf:ro
+        ports: 
+            - 5000:5000
+        depends_on: 
+            - mongo
+        networks:
+            service-network:
+                aliases: 
+                    - nginxdb   
+        
 
 networks:
     service-network:

@@ -1,7 +1,7 @@
 # Script for build, test, pack and deploy
 
 echo "Building..."
-docker-compose up
+docker-compose up --scale back=3 --scale mongo=3
 
 echo "Testing..."
 
